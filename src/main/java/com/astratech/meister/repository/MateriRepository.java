@@ -1,0 +1,18 @@
+package com.astratech.meister.repository;
+
+import com.astratech.meister.model.DetailAspek;
+import com.astratech.meister.model.Materi;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface MateriRepository extends CrudRepository<Materi, Integer> {
+    @Query("SELECT mt from Materi mt where mt.status =:status")
+    public Iterable<Materi> findMateriByStatus(@Param("status") String status);
+
+
+    @Query("SELECT s from Materi s where s.id_section.id_section =:id_section and s.status ='Aktif'")
+    public Iterable<Materi> findDetailMateriById_section(@Param("id_section") Integer id_section);
+}
